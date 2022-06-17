@@ -57,6 +57,7 @@ const SignUp = () => {
             </FormControl>
 
             <Button colorScheme={'blue'} width='100%' style={{marginTop: '15px'}} onClick={submitSignUp} >Sign Up</Button>
+            <Button colorScheme={'red'} variant='solid' width='100%' onClick={() => {setEmail('guest@example.com'); setPassword('123456')}} >Continue With Guest</Button>
             This is SignUp!!!
         </VStack>
     );
