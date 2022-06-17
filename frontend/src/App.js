@@ -5,7 +5,7 @@ import Homepage from './Pages/Homepage';
 
 function App() {
   return (
-    <section>
+    <section className='App'>
       <Routes>
         <Route path='/' element={<Homepage/>} />
         <Route path='/chats' element={<ChatPage/>} />
