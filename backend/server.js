@@ -6,7 +6,8 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 require('dotenv').config()
 const colors = require('colors')
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/userRoutes');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 app.use(cors())
 app.use(express.json())
@@ -17,6 +18,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/user', userRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(port, () => {
     console.log(`Server Started on PORT ${port}`);
