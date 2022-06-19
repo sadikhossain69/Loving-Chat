@@ -6,6 +6,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 require('dotenv').config()
 const colors = require('colors')
+const userRoutes = require('./routes/userRoutes')
 
 app.use(cors())
 app.use(express.json())
@@ -15,15 +16,7 @@ app.get('/', (req, res) => {
     res.send("API is Running")
 })
 
-app.get('/api/chat', (req, res) => {
-    res.send(chats)
-})
-
-app.get('/api/chat/:id', (req, res) => {
-    const id = req.params.id
-    const singleChat = chats.find(c => c._id === id)
-    res.send(singleChat)
-})
+app.use('/api/user', userRoutes)
 
 app.listen(port, () => {
     console.log(`Server Started on PORT ${port}`);
