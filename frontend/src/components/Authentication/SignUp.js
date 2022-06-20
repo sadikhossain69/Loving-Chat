@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 const SignUp = () => {
@@ -8,8 +8,53 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [pic, setPic] = useState('')
+    const [loading, setLoading] = useState(false)
+    const toast = useToast()
 
-    const postDetails = (pics) => {}
+    const postDetails = (pics) => {
+        setLoading(true)
+        if(pics === undefined) {
+            toast({
+                title: "Please select an Image",
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+                position: 'top'
+            })
+            return
+        }
+        if(pics.type === 'image/jpeg' || pics.type === 'image/png') {
+            const data = new FormData()
+            data.append('file', pics)
+            data.append("upload_preset", "Loving-Chat")
+            data.append('cloud_name', 'daycntffc')
+            fetch('https://api.cloudinary.com/v1_1/daycntffc/image/upload', {
+                method: "POST",
+                body: data
+            })
+            .then(res => res.json())
+            .then(picData => {
+                setPic(picData.url.toString())
+                console.log(picData);
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error(err)
+                setLoading(false)
+            })
+        }
+        else {
+            toast({
+                title: "Please select an Image",
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+                position: 'top'
+            })
+            setLoading(false)
+            return
+        }
+    }
 
     const submitSignUp = () => {}
 
@@ -56,7 +101,7 @@ const SignUp = () => {
                 <Input type='file' p={'1.5'} accept='image/*' onChange={(e) => postDetails(e.target.files[0])} />
             </FormControl>
 
-            <Button colorScheme={'blue'} width='100%' style={{marginTop: '15px'}} onClick={submitSignUp} >Sign Up</Button>
+            <Button colorScheme={'blue'} width='100%' style={{marginTop: '15px'}} onClick={submitSignUp} isLoading={loading} >Sign Up</Button>
             <Button colorScheme={'red'} variant='solid' width='100%' onClick={() => {setEmail('guest@example.com'); setPassword('123456')}} >Continue With Guest</Button>
             This is SignUp!!!
         </VStack>
