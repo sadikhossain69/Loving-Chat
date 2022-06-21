@@ -82,7 +82,7 @@ const Login = () => {
                         </Button>
                     </InputRightElement>
                 </InputGroup>
-            </FormControl>
+            </FormControl> 
 
             <Button colorScheme={'blue'} width='100%' style={{ marginTop: '15px' }} onClick={submitSignUp} isLoading={loading} >Login</Button>
             <Button colorScheme={'red'} variant='solid' width='100%' onClick={() => { setEmail('guest@example.com'); setPassword('123456') }} >Continue With Guest</Button>
