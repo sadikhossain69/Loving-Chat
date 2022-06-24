@@ -17,7 +17,7 @@ const accessChat = asyncHandler(async (req, res) => {
             { users: { $elemMatch: { $eq: userId } } }
         ]
     }).populate('users', '-password').populate('latestMessage')
-
+   
     isChat = await User.populate(isChat, {
         path: 'latestMessage.sender',
         select: 'name pic email'
